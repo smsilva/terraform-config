@@ -10,7 +10,7 @@ mkdir -p ${TEMP_INFRA_STACK_SOURCE_CODE?}
 release() {
   download ${STACK_VERSION?}
 
-  echo "[RELEASE] [${STACK_VERSION?}] [${ENVIRONMENT?}] [${TERRAFORM_CONFIGURATION_FILE?}]"
+  echo "[RELEASE] ${ENVIRONMENT?}-${STACK_VERSION?} [${TERRAFORM_CONFIGURATION_FILE?}]"
   echo ""
 
   ENVIRONMENT_LIVE_DIRECTORY=${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}
@@ -89,8 +89,9 @@ GIT_DIFF_LINE_COUNT=$(git diff | wc -l)
 
 git diff
 
+echo ""
+
 if [[ ${GIT_DIFF_LINE_COUNT} > 0 ]]; then
-  echo ""
   echo "  Need to update Live Repo. (lines in diff output: ${GIT_DIFF_LINE_COUNT})"
 
   git add .
@@ -106,4 +107,5 @@ fi
 
 cd - > /dev/null
 
+echo ""
 echo "[END]"
