@@ -1,5 +1,7 @@
 #!/bin/bash
-TEMP_DIR="./temp"
+set -e
+
+TEMP_DIR="${HOME?}/temp/deploy"
 TEMP_INFRA_STACK_SOURCE_CODE="${TEMP_DIR?}/infra-stack-source-code"
 TEMP_INFRA_STACK_LIVE="${TEMP_DIR?}/infra-stack-live"
 
@@ -9,14 +11,27 @@ mkdir -p ${TEMP_INFRA_STACK_LIVE?}
 release() {
   download ${STACK_VERSION?}
 
-  echo "release: ${STACK_VERSION?} ${ENVIRONMENT?} ${TERRAFORM_CONFIGURATION_FILE?}"
+  echo "[RELEASE] [${STACK_VERSION?}] [${ENVIRONMENT?}] [${TERRAFORM_CONFIGURATION_FILE?}]"
+  echo ""
 
-  echo "Removing old environment: ${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}"
+  ENVIRONMENT_LIVE_DIRECTORY=${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}
 
-  sudo rm -rf ${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}
+  echo "  Removing old environment: ${ENVIRONMENT_LIVE_DIRECTORY?}"
+  sudo rm -rf ${ENVIRONMENT_LIVE_DIRECTORY?}
+  mkdir -p ${ENVIRONMENT_LIVE_DIRECTORY?}
+  echo ""
 
-  echo "Copying the Stack Source Code at version ${STACK_VERSION?} to ${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}"
+  PROJECT_SOURCE_CODE_DIRECTORY="${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${STACK_VERSION?}/variables"
 
+  echo "  Copying the Stack Source Code ${PROJECT_SOURCE_CODE_DIRECTORY?}/* to ${ENVIRONMENT_LIVE_DIRECTORY?}"
+  echo ""
+
+  cp -R ${PROJECT_SOURCE_CODE_DIRECTORY?}/* ${ENVIRONMENT_LIVE_DIRECTORY?}
+
+  echo "  Copying the ${TERRAFORM_CONFIGURATION_FILE?} configuration file to ${ENVIRONMENT_LIVE_DIRECTORY?}"
+  cp ${TERRAFORM_CONFIGURATION_FILE?} ${ENVIRONMENT_LIVE_DIRECTORY?}/
+
+  echo ""
   echo ""
 }
 
@@ -26,7 +41,7 @@ download() {
   DOWNLOAD_FILE_NAME_REMOTE="v${STACK_VERSION?}.tar.gz"
   DOWNLOAD_FILE_NAME_LOCAL="${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${DOWNLOAD_FILE_NAME_REMOTE?}"
 
-  if [ ! -f ${DOWNLOAD_FILE_NAME_LOCAL?} ]; then
+  if [ ! -e ${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${STACK_VERSION?} ]; then
     echo ""
     echo "Downloading stack version... (${DOWNLOAD_FILE_NAME_REMOTE} / ${DOWNLOAD_FILE_NAME_LOCAL?})"
 
@@ -36,9 +51,9 @@ download() {
 
     echo "Extracting Source Code"
   
-    file ${DOWNLOAD_FILE_NAME_LOCAL?}
-
     tar xvf ${DOWNLOAD_FILE_NAME_LOCAL?} --directory=${TEMP_INFRA_STACK_SOURCE_CODE?}
+    
+    [ -e ${DOWNLOAD_FILE_NAME_LOCAL?} ] && rm ${DOWNLOAD_FILE_NAME_LOCAL?}
 
     echo ""
   fi
