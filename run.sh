@@ -10,6 +10,14 @@ release() {
   download ${STACK_VERSION?}
 
   echo "release: ${STACK_VERSION?} ${ENVIRONMENT?} ${TERRAFORM_CONFIGURATION_FILE?}"
+
+  echo "Removing old environment: ${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}"
+
+  sudo rm -rf ${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}
+
+  echo "Copying the Stack Source Code at version ${STACK_VERSION?} to ${TEMP_INFRA_STACK_LIVE?}/${ENVIRONMENT?}"
+
+  echo ""
 }
 
 download() {
@@ -36,9 +44,11 @@ download() {
   fi
 }
 
-echo "Cloning Stack Infra Live Git Repository"
+echo "Cloning Stack Infra Live Git Repository into: ${TEMP_INFRA_STACK_LIVE?}"
 
-git clone git@github.com:smsilva/terraform-live.git ${TEMP_INFRA_STACK_LIVE?}
+if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
+  git clone git@github.com:smsilva/terraform-live.git ${TEMP_INFRA_STACK_LIVE?}
+fi
 
 echo ""
 
@@ -46,11 +56,7 @@ for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
   ENVIRONMENT=$(basename ${ENVIRONMENT_DIRECTORY})
   TERRAFORM_CONFIGURATION_FILE=${ENVIRONMENT_DIRECTORY}/terraform.tfvars
 
-  echo "${ENVIRONMENT} (${TERRAFORM_CONFIGURATION_FILE})"
-
   STACK_VERSION=$(cat ${TERRAFORM_CONFIGURATION_FILE?} | hclq get "stack.version" -r)
   
-  echo "stack: ${STACK_VERSION}"
-
   release ${STACK_VERSION?} ${ENVIRONMENT?} ${TERRAFORM_CONFIGURATION_FILE?}
 done
