@@ -6,7 +6,6 @@ TEMP_INFRA_STACK_SOURCE_CODE="${TEMP_DIR?}/infra-stack-source-code"
 TEMP_INFRA_STACK_LIVE="${TEMP_DIR?}/infra-stack-live"
 
 mkdir -p ${TEMP_INFRA_STACK_SOURCE_CODE?}
-mkdir -p ${TEMP_INFRA_STACK_LIVE?}
 
 release() {
   download ${STACK_VERSION?}
@@ -23,10 +22,10 @@ release() {
 
   PROJECT_SOURCE_CODE_DIRECTORY="${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${STACK_VERSION?}/variables"
 
-  echo "  Copying the Stack Source Code ${PROJECT_SOURCE_CODE_DIRECTORY?}/* to ${ENVIRONMENT_LIVE_DIRECTORY?}"
+  echo "  Copying the Stack Source Code ${PROJECT_SOURCE_CODE_DIRECTORY?}/ to ${ENVIRONMENT_LIVE_DIRECTORY?}"
   echo ""
 
-  cp -R ${PROJECT_SOURCE_CODE_DIRECTORY?}/* ${ENVIRONMENT_LIVE_DIRECTORY?}
+  cp -R ${PROJECT_SOURCE_CODE_DIRECTORY?}/ ${ENVIRONMENT_LIVE_DIRECTORY?}
 
   echo "  Copying the ${TERRAFORM_CONFIGURATION_FILE?} configuration file to ${ENVIRONMENT_LIVE_DIRECTORY?}"
   cp ${TERRAFORM_CONFIGURATION_FILE?} ${ENVIRONMENT_LIVE_DIRECTORY?}/
@@ -59,11 +58,16 @@ download() {
   fi
 }
 
-echo "Cloning Stack Infra Live Git Repository into: ${TEMP_INFRA_STACK_LIVE?}"
-
 if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
-  git clone git@github.com:smsilva/terraform-live.git ${TEMP_INFRA_STACK_LIVE?}
+  echo "Cloning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
+  
+  git clone "git@github.com:smsilva/terraform-live.git" "${TEMP_INFRA_STACK_LIVE?}"
+else
+  echo "Stack Infra Live Git Repository already into: ${TEMP_INFRA_STACK_LIVE?}"
 fi
+
+echo "Listing the contents of ${TEMP_INFRA_STACK_LIVE?}"
+ls -lha ${TEMP_INFRA_STACK_LIVE?}
 
 echo ""
 
