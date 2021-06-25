@@ -4,7 +4,7 @@ stack = {
 
 resource_tags = {
   project     = "demo-project",
-  environment = "infra-sandbox",
+  environment = "infrasandbox",
   owner       = "me@example.com"
 }
 
