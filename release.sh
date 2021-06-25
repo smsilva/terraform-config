@@ -19,6 +19,7 @@ ENVIRONMENT_LIVE_DIRECTORY="${TEMP_INFRA_STACK_LIVE?}/src"
 
 echo "  Removing old environment: ${ENVIRONMENT_LIVE_DIRECTORY?}/*"
 sudo rm -rf ${ENVIRONMENT_LIVE_DIRECTORY?}/*
+tree ${ENVIRONMENT_LIVE_DIRECTORY?}
 mkdir -p ${TEMP_INFRA_STACK_LIVE?}
 echo ""
 

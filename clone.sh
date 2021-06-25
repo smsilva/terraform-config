@@ -5,10 +5,12 @@ echo "[START]"
 echo ""
 
 if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
-  echo "  Clonning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
-  echo ""
+  GIT_REMOTE_REPOSITORY="git@github.com:smsilva/${GIT_REPOSITORY_STACK_LIVE?}.git"
 
-  git clone "git@github.com:smsilva/${GIT_REPOSITORY_STACK?}.git" "${TEMP_INFRA_STACK_LIVE?}"
+  echo "  Clonning ${GIT_REMOTE_REPOSITORY?} into: ${TEMP_INFRA_STACK_LIVE?}"
+  echo ""
+  
+  git clone "${GIT_REMOTE_REPOSITORY?}" "${TEMP_INFRA_STACK_LIVE?}"
   
   echo ""
 else
