@@ -5,6 +5,8 @@ TEMP_DIR="${HOME?}/temp/deploy"
 TEMP_INFRA_STACK_SOURCE_CODE="${TEMP_DIR?}/infra-stack-source-code"
 TEMP_INFRA_STACK_LIVE="${TEMP_DIR?}/infra-stack-live"
 
+GIT_REPOSITORY_LIVE="terraform-demo-live"
+
 mkdir -p ${TEMP_INFRA_STACK_SOURCE_CODE?}
 
 release() {
@@ -20,15 +22,15 @@ release() {
   mkdir -p ${ENVIRONMENT_LIVE_DIRECTORY?}
   echo ""
 
-  PROJECT_SOURCE_CODE_DIRECTORY="${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${STACK_VERSION?}/variables"
+  PROJECT_SOURCE_CODE_DIRECTORY="${TEMP_INFRA_STACK_SOURCE_CODE?}/${GIT_REPOSITORY_LIVE?}-${STACK_VERSION?}"
 
   echo "  Copying the Stack Source Code ${PROJECT_SOURCE_CODE_DIRECTORY?}/ to ${ENVIRONMENT_LIVE_DIRECTORY?}"
   echo ""
 
   cp -R ${PROJECT_SOURCE_CODE_DIRECTORY?}/ ${ENVIRONMENT_LIVE_DIRECTORY?}
 
-  echo "  Copying the ${TERRAFORM_CONFIGURATION_FILE?} configuration file to ${ENVIRONMENT_LIVE_DIRECTORY?}/variables"
-  cp ${TERRAFORM_CONFIGURATION_FILE?} ${ENVIRONMENT_LIVE_DIRECTORY?}/variables
+  echo "  Copying the ${TERRAFORM_CONFIGURATION_FILE?} configuration file to ${ENVIRONMENT_LIVE_DIRECTORY?}"
+  cp ${TERRAFORM_CONFIGURATION_FILE?} ${ENVIRONMENT_LIVE_DIRECTORY?}
 
   echo ""
   echo ""
@@ -38,14 +40,14 @@ download() {
   STACK_VERSION=$1
   
   DOWNLOAD_FILE_NAME_REMOTE="v${STACK_VERSION?}.tar.gz"
-  DOWNLOAD_FILE_NAME_LOCAL="${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${DOWNLOAD_FILE_NAME_REMOTE?}"
+  DOWNLOAD_FILE_NAME_LOCAL="${TEMP_INFRA_STACK_SOURCE_CODE?}/${GIT_REPOSITORY_LIVE?}-${DOWNLOAD_FILE_NAME_REMOTE?}"
 
   if [ ! -e ${TEMP_INFRA_STACK_SOURCE_CODE?}/terraform-${STACK_VERSION?} ]; then
     echo ""
     echo "Downloading stack version... (${DOWNLOAD_FILE_NAME_REMOTE} / ${DOWNLOAD_FILE_NAME_LOCAL?})"
 
     wget \
-      --quiet "https://github.com/smsilva/terraform/archive/refs/tags/${DOWNLOAD_FILE_NAME_REMOTE}" \
+      --quiet "https://github.com/smsilva/${GIT_REPOSITORY_LIVE}/archive/refs/tags/${DOWNLOAD_FILE_NAME_REMOTE}" \
       --output-document ${DOWNLOAD_FILE_NAME_LOCAL?}
 
     echo "Extracting Source Code"
@@ -65,7 +67,7 @@ if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
   echo "  Cloning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
   echo ""
 
-  git clone "git@github.com:smsilva/terraform-live.git" "${TEMP_INFRA_STACK_LIVE?}"
+  git clone "git@github.com:smsilva/${GIT_REPOSITORY_LIVE?}.git" "${TEMP_INFRA_STACK_LIVE?}"
   
   echo ""
 else
