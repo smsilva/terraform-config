@@ -1,5 +1,5 @@
 #!/bin/bash
-TEMP_DIR="./temp/"
+TEMP_DIR="./temp"
 TEMP_INFRA_STACK_SOURCE_CODE="${TEMP_DIR?}/infra-stack-source-code"
 TEMP_INFRA_STACK_LIVE="${TEMP_DIR?}/infra-stack-live"
 
