@@ -90,8 +90,6 @@ echo "[GIT] Find for changes to commit into: ${TEMP_INFRA_STACK_LIVE?}"
 
 GIT_DIFF_LINE_COUNT=$(git diff | wc -l)
 
-git diff
-
 echo ""
 
 if [[ ${GIT_DIFF_LINE_COUNT} > 0 ]]; then
