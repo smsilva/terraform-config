@@ -69,7 +69,7 @@ if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
   echo "  Clonning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
   echo ""
 
-  git clone "git@github.com:smsilva/${GIT_REPOSITORY_LIVE?}.git" "${TEMP_INFRA_STACK_LIVE?}"
+  git clone "git@github.com:smsilva/${GIT_REPOSITORY_STACK?}.git" "${TEMP_INFRA_STACK_LIVE?}"
   
   echo ""
 else
