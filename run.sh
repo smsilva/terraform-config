@@ -9,7 +9,6 @@ GIT_REPOSITORY_STACK="terraform-demo-stack"
 
 . ./clone.sh
 
-# Read Environments and create one Release for each one into Stack Live Repository
 for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
   ENVIRONMENT=$(basename ${ENVIRONMENT_DIRECTORY})
 
@@ -19,6 +18,5 @@ for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
 
   . ./download.sh ${GIT_REPOSITORY_STACK?} ${STACK_VERSION?}
   . ./release.sh
+  . ./push.sh
 done
-
-. ./push.sh

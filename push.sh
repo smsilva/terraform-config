@@ -3,15 +3,15 @@ cd ${TEMP_INFRA_STACK_LIVE?}
 
 echo "[GIT] Find for changes to commit into: ${TEMP_INFRA_STACK_LIVE?}"
 
-GIT_DIFF_LINE_COUNT=$(git diff | wc -l)
+git add .
 
-echo ""
-
-if [[ ${GIT_DIFF_LINE_COUNT} > 0 ]]; then
+if ! git diff-index --quiet HEAD --; then
   echo "  Need to update Live Repo. (lines in diff output: ${GIT_DIFF_LINE_COUNT})"
 
-  git add .
+  touch ${GIT_REPOSITORY_STACK}-${STACK_VERSION?}-release-$(date +"%Y-%m-%d_%H-%M-%S")-.txt
 
+  git add .
+    
   git commit -m "Build"
 
   git pull --rebase
