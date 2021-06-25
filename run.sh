@@ -12,28 +12,28 @@ mkdir -p ${TEMP_INFRA_STACK_SOURCE_CODE?}
 release() {
   STACK_VERSION=$1
   
-  STACK_REMOTE_FILE_NAME="v${STACK_VERSION?}.tar.gz"
-  STACK_LOCAL_FILE_NAME="${TEMP_INFRA_STACK_SOURCE_CODE?}/${GIT_REPOSITORY_STACK?}-${STACK_REMOTE_FILE_NAME?}"
+  REMOTE_FILE_NAME="v${STACK_VERSION?}.tar.gz"
+  LOCAL_FILE_NAME="${TEMP_INFRA_STACK_SOURCE_CODE?}/${GIT_REPOSITORY_STACK?}-${REMOTE_FILE_NAME?}"
 
   STACK_DIRECTORY="${TEMP_INFRA_STACK_SOURCE_CODE?}/${GIT_REPOSITORY_STACK?}-${STACK_VERSION?}"
 
   if [ ! -e ${STACK_DIRECTORY?} ]; then
-    echo ""
-
-    REMOTE_FILE="https://github.com/smsilva/${GIT_REPOSITORY_STACK}/archive/refs/tags/${STACK_REMOTE_FILE_NAME}"
+    REMOTE_FILE_URI="https://github.com/smsilva/${GIT_REPOSITORY_STACK}/archive/refs/tags/${REMOTE_FILE_NAME}"
 
     echo "Downloading stack version..."
-    echo "${REMOTE_FILE?}"
+    echo "${REMOTE_FILE_URI?}"
 
     wget \
-      --quiet "${REMOTE_FILE?}" \
-      --output-document ${STACK_LOCAL_FILE_NAME?}
+      --quiet "${REMOTE_FILE_URI?}" \
+      --output-document ${LOCAL_FILE_NAME?}
 
+    echo ""
     echo "Extracting Source Code"
+    echo "${TEMP_INFRA_STACK_SOURCE_CODE?}"
   
-    tar xvf ${STACK_LOCAL_FILE_NAME?} --directory=${TEMP_INFRA_STACK_SOURCE_CODE?}
+    tar xvf ${LOCAL_FILE_NAME?} --directory=${TEMP_INFRA_STACK_SOURCE_CODE?}
     
-    [ -e ${STACK_LOCAL_FILE_NAME?} ] && rm ${STACK_LOCAL_FILE_NAME?}
+    [ -e ${LOCAL_FILE_NAME?} ] && rm ${LOCAL_FILE_NAME?}
 
     echo ""
   fi
@@ -73,15 +73,17 @@ if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
   
   echo ""
 else
-  echo "  Stack Infra Live Git Repository already into: ${TEMP_INFRA_STACK_LIVE?}"
+  echo "  Stack Infra Live Git Repository is already into: ${TEMP_INFRA_STACK_LIVE?}"
 fi
 
 echo ""
 echo ""
 
+# Read Environments and create one Release for each one into Stack Live Repository
 for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
   ENVIRONMENT=$(basename ${ENVIRONMENT_DIRECTORY})
-  TERRAFORM_CONFIGURATION_FILE=${ENVIRONMENT_DIRECTORY}/terraform.tfvars
+
+  TERRAFORM_CONFIGURATION_FILE="${ENVIRONMENT_DIRECTORY}/terraform.tfvars"
 
   STACK_VERSION=$(cat ${TERRAFORM_CONFIGURATION_FILE?} | hclq get "stack.version" -r)
   
