@@ -8,7 +8,7 @@ git add .
 if ! git diff-index --quiet HEAD --; then
   echo "  Need to update Live Repo. (lines in diff output: ${GIT_DIFF_LINE_COUNT})"
 
-  touch ${GIT_REPOSITORY_STACK}-${STACK_VERSION?}-release-$(date +"%Y-%m-%d_%H-%M-%S")-.txt
+  touch ${GIT_REPOSITORY_STACK}_${STACK_VERSION?}_release_$(date +"%Y%m%d_%H%M%S").txt
 
   git add .
     
