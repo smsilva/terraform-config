@@ -58,17 +58,18 @@ download() {
   fi
 }
 
+echo "[START]"
+echo ""
+
 if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
-  echo "Cloning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
+  echo "  Cloning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
   
   git clone "git@github.com:smsilva/terraform-live.git" "${TEMP_INFRA_STACK_LIVE?}"
 else
-  echo "Stack Infra Live Git Repository already into: ${TEMP_INFRA_STACK_LIVE?}"
+  echo "  Stack Infra Live Git Repository already into: ${TEMP_INFRA_STACK_LIVE?}"
 fi
 
-echo "Listing the contents of ${TEMP_INFRA_STACK_LIVE?}"
-ls -lha ${TEMP_INFRA_STACK_LIVE?}
-
+echo ""
 echo ""
 
 for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
@@ -79,3 +80,5 @@ for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
   
   release ${STACK_VERSION?} ${ENVIRONMENT?} ${TERRAFORM_CONFIGURATION_FILE?}
 done
+
+echo "[END]"
