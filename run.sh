@@ -63,8 +63,11 @@ echo ""
 
 if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
   echo "  Cloning Stack Infra Live Git Repository into: [${TEMP_INFRA_STACK_LIVE?}]"
-  
+  echo ""
+
   git clone "git@github.com:smsilva/terraform-live.git" "${TEMP_INFRA_STACK_LIVE?}"
+  
+  echo ""
 else
   echo "  Stack Infra Live Git Repository already into: ${TEMP_INFRA_STACK_LIVE?}"
 fi
