@@ -14,6 +14,7 @@ git add .
 
 if ! git diff-index --quiet HEAD --; then
   echo "  Need to update Live Repo."
+  echo ""
 
   git commit -m "Build"
 
