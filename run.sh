@@ -8,7 +8,7 @@ TEMP_INFRA_STACK_LIVE="${TEMP_DIR?}/infra-stack-live"
 GIT_REPOSITORY_STACK="terraform-demo-stack"
 GIT_REPOSITORY_STACK_LIVE="terraform-demo-live"
 
-. ./clone.sh
+. ./clone.sh ${GIT_REPOSITORY_STACK_LIVE?}
 
 for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
   ENVIRONMENT=$(basename ${ENVIRONMENT_DIRECTORY})
