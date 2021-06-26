@@ -3,7 +3,7 @@ stack = {
 }
 
 resource_tags = {
-  project     = "demo-project",
+  project     = "demo",
   environment = "sandbox",
   owner       = "me@example.com"
 }
