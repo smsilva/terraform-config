@@ -1,17 +1,19 @@
 #!/bin/bash
-cd ${TEMP_INFRA_STACK_LIVE?}
+PUSH_STACK_SOURCE_CODE_TARGET=$1
+
+cd ${PUSH_STACK_SOURCE_CODE_TARGET?}
 
 echo "Push"
 echo ""
 
 echo "  Looking for changes"
-echo "    ${TEMP_INFRA_STACK_LIVE?}"
+echo "    ${PUSH_STACK_SOURCE_CODE_TARGET?}"
 echo ""
 
 git add .
 
 if ! git diff-index --quiet HEAD --; then
-  echo "  Need to update Live Repo. (lines in diff output: ${GIT_DIFF_LINE_COUNT})"
+  echo "  Need to update Live Repo."
 
   git commit -m "Build"
 
