@@ -1,7 +1,7 @@
 project = {
   name        = "demo",
   environment = "sandbox",
-  version     = "1.1.1"
+  version     = "1.1.0"
   owner       = "smsilva@gmail.com"
 }
 
