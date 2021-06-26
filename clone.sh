@@ -12,8 +12,6 @@ if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
   echo ""
   
   git clone "${GIT_REMOTE_REPOSITORY?}" "${TEMP_INFRA_STACK_LIVE?}" --quiet
-  
-  echo ""
 else
   echo "  Stack Infra Live Git Repository is already into:"
   echo "    ${TEMP_INFRA_STACK_LIVE?}"
