@@ -21,13 +21,6 @@ echo ""
 if [ ! -e ${DOWNLOAD_RELEASE_DIRECTORY?} ]; then
   mkdir -p ${DOWNLOAD_SOURCE_CODE_DIRECTORY?}
 
-  echo "  Remote file"
-  echo "    ${REMOTE_FILE_URI?}"
-  echo ""
-
-  echo "  Local file"
-  echo "    ${DOWNLOAD_FILE?}"
-
   wget \
       --quiet "${REMOTE_FILE_URI?}" \
       --output-document ${DOWNLOAD_FILE?}

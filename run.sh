@@ -21,6 +21,6 @@ for ENVIRONMENT_DIRECTORY in $(find ./environments/ -type d | sed 1d); do
   STACK_VERSION=$(cat ${TERRAFORM_CONFIGURATION_FILE?} | hclq get "project.version" -r)
 
   . ./download.sh ${GIT_REPOSITORY_STACK?} ${STACK_VERSION?} ${TEMP_INFRA_STACK_SOURCE_CODE?}
-  . ./release.sh ${ENVIRONMENT} ${STACK_VERSION?} ${TEMP_INFRA_STACK_LIVE?} ${TEMP_INFRA_STACK_SOURCE_CODE?} 
+  . ./release.sh ${ENVIRONMENT} ${STACK_VERSION?} ${TEMP_INFRA_STACK_LIVE?} ${TEMP_INFRA_STACK_SOURCE_CODE?} ${ENVIRONMENT_DIRECTORY?}
   . ./push.sh
 done
