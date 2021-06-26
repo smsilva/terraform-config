@@ -12,6 +12,8 @@ PROJECT_LIVE=$2
 
 ${PWD}/scripts/clone.sh ${PROJECT_LIVE?} ${SOURCE_CODE_TARGET?}
 
+find ${PWD}/environments/ -maxdepth 1 -type d | sed 1d
+
 for ENVIRONMENT_DIRECTORY in $(find ${PWD}/environments/ -maxdepth 1 -type d | sed 1d); do
   SOURCE_CODE_VERSION=$(cat ${ENVIRONMENT_DIRECTORY}/terraform.tfvars | hclq get "project.version" -r)
   BRANCH_NAME=$(basename ${ENVIRONMENT_DIRECTORY})

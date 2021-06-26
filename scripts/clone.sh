@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 CLONE_GIT_ACCOUNT="smsilva"
 CLONE_GIT_REPO_NAME=$1
 CLONE_GIT_REPO_REMOTE="git@github.com:${CLONE_GIT_ACCOUNT?}/${CLONE_GIT_REPO_NAME?}.git"

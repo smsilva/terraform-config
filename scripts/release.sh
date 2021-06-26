@@ -21,27 +21,38 @@ echo ""
 
 cd ${RELEASE_STACK_DIRECTORY_LIVE?} > /dev/null
 
-git checkout ${RELEASE_STACK_LIVE_BRANCH?} --quiet
+git checkout ${RELEASE_STACK_LIVE_BRANCH?} --quiet 2> /dev/null
 
-git pull --rebase --quiet
+if [ $? == 0 ]; then
+  git pull --rebase --quiet
+  
+  echo "  Deleting old files"
+  echo "    ${RELEASE_STACK_DIRECTORY_LIVE?}/src"
+  sudo rm -rf "${RELEASE_STACK_DIRECTORY_LIVE?}/src"
+  echo ""
+  
+  echo "  Source code copy"
+  echo "     ${RELEASE_PROJECT_SOURCE_CODE_DIRECTORY?}/src to ${RELEASE_STACK_DIRECTORY_LIVE?}/src"
+  echo ""
+  
+  cp -r ${RELEASE_PROJECT_SOURCE_CODE_DIRECTORY?}/src ${RELEASE_STACK_DIRECTORY_LIVE?}/src
+  
+  echo "  Environment Configuration copy"
+  echo "    ${RELEASE_ENVIRONMENT_DIRECTORY?}/* to ${RELEASE_STACK_DIRECTORY_LIVE?}/src/"
+  
+  cp -r ${RELEASE_ENVIRONMENT_DIRECTORY?}/* ${RELEASE_STACK_DIRECTORY_LIVE?}/src/
+  
+  echo ""
 
-cd - > /dev/null
+  cd - > /dev/null
+else
+  cd - > /dev/null
+  
+  echo "  ERROR"
+  echo "    Remote branch not found: ${RELEASE_STACK_LIVE_BRANCH?}"  
+  echo ""
 
-echo "  Deleting old files"
-echo "    ${RELEASE_STACK_DIRECTORY_LIVE?}/src"
-sudo rm -rf "${RELEASE_STACK_DIRECTORY_LIVE?}/src"
-echo ""
+  exit 1
+fi
 
-echo "  Source code copy"
-echo "     ${RELEASE_PROJECT_SOURCE_CODE_DIRECTORY?}/src to ${RELEASE_STACK_DIRECTORY_LIVE?}/src"
-echo ""
-
-cp -r ${RELEASE_PROJECT_SOURCE_CODE_DIRECTORY?}/src ${RELEASE_STACK_DIRECTORY_LIVE?}/src
-
-echo "  Environment Configuration copy"
-echo "    ${RELEASE_ENVIRONMENT_DIRECTORY?}/* to ${RELEASE_STACK_DIRECTORY_LIVE?}/src/"
-
-cp -r ${RELEASE_ENVIRONMENT_DIRECTORY?}/* ${RELEASE_STACK_DIRECTORY_LIVE?}/src/
-
-echo ""
 echo ""

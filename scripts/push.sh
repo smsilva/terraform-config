@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 PUSH_STACK_SOURCE_CODE_TARGET=$1
 
 cd ${PUSH_STACK_SOURCE_CODE_TARGET?}
