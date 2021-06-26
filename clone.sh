@@ -1,20 +1,28 @@
 #!/bin/bash
-mkdir -p ${TEMP_INFRA_STACK_SOURCE_CODE?}
+CLONE_GIT_ACCOUNT="smsilva"
+CLONE_GIT_REPO_NAME=$1
+CLONE_GIT_REPO_REMOTE="git@github.com:${CLONE_GIT_ACCOUNT?}/${CLONE_GIT_REPO_NAME?}.git"
+CLONE_GIT_REPO_LOCAL=$2
 
 echo "Clone"
 echo ""
 
-if [ ! -e ${TEMP_INFRA_STACK_LIVE?} ]; then
-  GIT_REMOTE_REPOSITORY="git@github.com:smsilva/${GIT_REPOSITORY_STACK_LIVE?}.git"
+echo "  Parameters"
+echo "    CLONE_GIT_ACCOUNT.....: ${CLONE_GIT_ACCOUNT}"
+echo "    CLONE_GIT_REPO_NAME...: ${CLONE_GIT_REPO_NAME}"
+echo "    CLONE_GIT_REPO_REMOTE.: ${CLONE_GIT_REPO_REMOTE}"
+echo "    CLONE_GIT_REPO_LOCAL..: ${CLONE_GIT_REPO_LOCAL}"
+echo ""
 
+if [ ! -e ${CLONE_GIT_REPO_LOCAL?} ]; then
   echo "  git clone"
-  echo "    ${GIT_REMOTE_REPOSITORY?} into: ${TEMP_INFRA_STACK_LIVE?}"
+  echo "    ${CLONE_GIT_REPO_REMOTE?} into: ${CLONE_GIT_REPO_LOCAL?}"
   echo ""
   
-  git clone "${GIT_REMOTE_REPOSITORY?}" "${TEMP_INFRA_STACK_LIVE?}" --quiet
+  git clone "${CLONE_GIT_REPO_REMOTE?}" "${CLONE_GIT_REPO_LOCAL?}" --quiet
 else
   echo "  Stack Infra Live Git Repository is already into:"
-  echo "    ${TEMP_INFRA_STACK_LIVE?}"
+  echo "    ${CLONE_GIT_REPO_LOCAL?}"
 fi
 
 echo ""
