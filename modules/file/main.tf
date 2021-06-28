@@ -15,6 +15,7 @@ data "template_file" "tfvars" {
 }
 
 resource "local_file" "file" {
-  content  = data.template_file.tfvars.rendered
-  filename = "${var.destination}/${var.environment}/terraform.tfvars"
+  content         = data.template_file.tfvars.rendered
+  filename        = "${var.destination}/${var.environment}/terraform.tfvars"
+  file_permission = "0644"
 }
