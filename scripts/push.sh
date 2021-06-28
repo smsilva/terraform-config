@@ -2,6 +2,7 @@
 set -e
 
 PUSH_STACK_SOURCE_CODE_TARGET=$1
+PUSH_SOURCE_CODE_VERSION=$2
 
 cd ${PUSH_STACK_SOURCE_CODE_TARGET?}
 
@@ -18,7 +19,7 @@ if ! git diff-index --quiet HEAD --; then
   echo "  Need to update Live Repo."
   echo ""
 
-  git commit -m "Build"
+  git commit -m "build-${PUSH_SOURCE_CODE_VERSION?}"
 
   git pull --rebase
 
