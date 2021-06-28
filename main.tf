@@ -9,6 +9,7 @@ locals {
   environments = toset([
     "sandbox",
     "stage",
+    "prod"
   ])
 }
 
