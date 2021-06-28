@@ -7,10 +7,10 @@ locals {
 }
 
 module "template" {
-  source = "./modules/file"
+  source = "./modules/template"
 
   for_each            = local.environments
   environment         = each.key
-  templates_directory = "./templates"
-  destination         = "./environments"
+  templates_directory = "templates"
+  destination         = "environments"
 }

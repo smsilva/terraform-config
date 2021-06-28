@@ -1,15 +1,3 @@
-variable "environment" {
-  default = "temp"
-}
-
-variable "templates_directory" {
-  default = "../../templates"
-}
-
-variable "destination" {
-  default = "../../environments"
-}
-
 data "template_file" "tfvars" {
   template = file("${var.templates_directory}/${var.environment}.tfvars.tpl")
 }
