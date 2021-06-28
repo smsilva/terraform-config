@@ -1,6 +1,6 @@
 environment = {
   name    = "sandbox",
-  version = "1.2.6"
+  version = "1.2.8"
 }
 
 instances = {
