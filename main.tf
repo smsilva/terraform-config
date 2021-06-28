@@ -1,10 +1,3 @@
-variable "project" {
-  default = {
-    name  = "demo"
-    owner = "smsilva@gmail.com"
-  }
-}
-
 locals {
   environments = toset([
     "sandbox",
