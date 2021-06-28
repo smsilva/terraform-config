@@ -12,5 +12,5 @@ module "template" {
   for_each            = local.environments
   environment         = each.key
   templates_directory = "templates"
-  destination         = "environments"
+  destination         = ".environments"
 }
