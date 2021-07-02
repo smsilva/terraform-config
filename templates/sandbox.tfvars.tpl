@@ -1,12 +1,12 @@
 environment = {
   name    = "sandbox"
   version = "2.0.0"
-  region  = "us-east-2"
+  region  = "us-east-1"
 }
 
 instances = {
   count = 1
-  type  = "t2.nano"
+  type  = "t3.nano"
 }
 
 cidr = "10.240.0.0/16"
