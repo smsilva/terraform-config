@@ -5,8 +5,8 @@ environment = {
 }
 
 instances = {
-  count = 2
-  type  = "t3.nano"
+  count = 1
+  type  = "t2.nano"
 }
 
 cidr = "10.240.0.0/16"
