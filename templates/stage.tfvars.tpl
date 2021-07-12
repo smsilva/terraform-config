@@ -1,9 +1,9 @@
 environment = {
   name    = "stage",
-  version = "1.2.5"
+  version = "2.0.2"
 }
 
 instances = {
   count = 3
-  type  = "t3.nano"
+  type  = "t2.nano"
 }
