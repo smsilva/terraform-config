@@ -26,7 +26,7 @@ git checkout ${RELEASE_ARTIFACT_FLAVOR_BRANCH?} --quiet 2> /dev/null
 if [ $? == 0 ]; then
   git pull --rebase --quiet
   
-  echo "  Deleting Artifact old files"
+  echo "  Deleting Artifact local old files"
   echo "    ${RELEASE_STACK_DIRECTORY_ARTIFACT?}/src"
   sudo rm -rf "${RELEASE_STACK_DIRECTORY_ARTIFACT?}/src"
   echo ""
