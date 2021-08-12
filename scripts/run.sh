@@ -8,13 +8,13 @@ rm -rf "${SOURCE_CODE_ORIGIN?}"
 rm -rf "${SOURCE_CODE_TARGET?}"
 
 PROJECT_STACK=$1
-PROJECT_LIVE=$2
+PROJECT_ARTIFACT=$2
 
-${PWD}/scripts/clone.sh ${PROJECT_LIVE?} ${SOURCE_CODE_TARGET?}
+${PWD}/scripts/clone.sh ${PROJECT_ARTIFACT?} ${SOURCE_CODE_TARGET?}
 
-for ENVIRONMENT_DIRECTORY in $(find ${PWD}/.environments/ -maxdepth 1 -type d | sed 1d); do
-  SOURCE_CODE_VERSION=$(cat ${ENVIRONMENT_DIRECTORY}/terraform.tfvars | hclq get "environment.version" -r)
-  BRANCH_NAME=$(basename ${ENVIRONMENT_DIRECTORY})
+for FLAVOR_DIRECTORY in $(find ${PWD}/.flavors/ -maxdepth 1 -type d | sed 1d); do
+  SOURCE_CODE_VERSION=$(cat ${FLAVOR_DIRECTORY}/terraform.tfvars | hclq get "environment.version" -r)
+  BRANCH_NAME=$(basename ${FLAVOR_DIRECTORY})
 
   ${PWD}/scripts/download.sh \
     ${PROJECT_STACK?} \
@@ -27,7 +27,7 @@ for ENVIRONMENT_DIRECTORY in $(find ${PWD}/.environments/ -maxdepth 1 -type d | 
     ${SOURCE_CODE_TARGET?} \
     ${SOURCE_CODE_ORIGIN?} \
     ${PROJECT_STACK?} \
-    ${ENVIRONMENT_DIRECTORY?}
+    ${FLAVOR_DIRECTORY?}
   
   ${PWD}/scripts/push.sh \
     ${SOURCE_CODE_TARGET?} \

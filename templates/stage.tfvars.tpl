@@ -1,6 +1,6 @@
 environment = {
   name    = "stage",
-  version = "2.0.3"
+  version = "2.0.4"
   region  = "us-east-1"
 }
 

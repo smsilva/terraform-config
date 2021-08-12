@@ -1,5 +1,5 @@
 locals {
-  environments = [
+  flavors = [
     "sandbox",
     "stage",
     "prod"
@@ -9,8 +9,8 @@ locals {
 module "template" {
   source = "./modules/template"
 
-  for_each            = toset(local.environments)
+  for_each            = toset(local.flavors)
   environment         = each.key
   templates_directory = "templates"
-  destination         = ".environments"
+  destination         = ".flavors"
 }
