@@ -32,7 +32,7 @@ if [ $? == 0 ]; then
   echo ""
   
   echo "  Stack Source Code copy"
-  echo "     ${RELEASE_STACK_DIRECTORY_SOURCE_CODE?}/src to ${RELEASE_STACK_DIRECTORY_ARTIFACT?}/src"
+  echo "    ${RELEASE_STACK_DIRECTORY_SOURCE_CODE?}/src to ${RELEASE_STACK_DIRECTORY_ARTIFACT?}/src"
   echo ""
   
   cp -r ${RELEASE_STACK_DIRECTORY_SOURCE_CODE?}/src ${RELEASE_STACK_DIRECTORY_ARTIFACT?}/src

@@ -23,7 +23,7 @@ if [ ! -e ${CLONE_GIT_REPO_LOCAL?} ]; then
   
   git clone "${CLONE_GIT_REPO_REMOTE?}" "${CLONE_GIT_REPO_LOCAL?}" --quiet
 else
-  echo "  Stack Infra Live Git Repository is already into:"
+  echo "  Artifact Git Repository is already into:"
   echo "    ${CLONE_GIT_REPO_LOCAL?}"
 fi
 

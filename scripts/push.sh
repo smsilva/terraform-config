@@ -16,7 +16,7 @@ echo ""
 git add .
 
 if ! git diff-index --quiet HEAD --; then
-  echo "  Need to update Live Repo."
+  echo "  Need to update Artifact Repo."
   echo ""
 
   git commit -m "build-${PUSH_SOURCE_CODE_VERSION?}"
